@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>從茵斯布魯克出發 — 歐洲旅遊總覽</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d2e;
+    --surface2: #252840;
+    --accent: #7c83f7;
+    --accent2: #f7a74a;
+    --accent3: #5ecb8e;
+    --danger: #f76c6c;
+    --text: #e8eaf6;
+    --text2: #9095b8;
+    --border: #2e3155;
+    --tag-blue: #1e2a4a;
+    --tag-green: #1a3a2a;
+    --tag-orange: #3a2a10;
+    --tag-red: #3a1a1a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .nav-title {
+    font-size: 13px;
+    color: var(--text2);
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-title strong { color: var(--accent); }
+
+  .slide-dots {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 2;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+  .dot.active { background: var(--accent); transform: scale(1.3); }
+  .dot:hover:not(.active) { background: var(--text2); }
+
+  .nav-counter {
+    font-size: 12px;
+    color: var(--text2);
+    min-width: 50px;
+    text-align: right;
+    flex: 1;
+  }
+
+  /* ── SLIDE CONTAINER ── */
+  .slider {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slides-track {
+    display: flex;
+    height: 100%;
+    transition: transform .4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .slide {
+    min-width: 100%;
+    height: 100%;
+    padding: 32px 48px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background .2s, border-color .2s;
+  }
+  .btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+  .btn:disabled { opacity: .3; cursor: not-allowed; }
+  .btn:disabled:hover { background: var(--surface2); border-color: var(--border); color: var(--text); }
+
+  .slide-label {
+    font-size: 13px;
+    color: var(--text2);
+    font-weight: 500;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  p { font-size: 14px; line-height: 1.7; color: var(--text2); }
+  p strong { color: var(--text); }
+
+  /* ── CARDS / GRID ── */
+  .card-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .col-2 { grid-template-columns: 1fr 1fr; }
+  .col-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .col-auto { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color .2s;
+  }
+  .card:hover { border-color: var(--accent); }
+
+  .card-icon { font-size: 24px; }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--text); }
+  .card-sub { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+  td strong { color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(124,131,247,.05); }
+
+  /* ── TAGS / BADGES ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .tag-blue  { background: var(--tag-blue);   color: var(--accent);  border: 1px solid var(--accent); }
+  .tag-green { background: var(--tag-green);  color: var(--accent3); border: 1px solid var(--accent3); }
+  .tag-orange{ background: var(--tag-orange); color: var(--accent2); border: 1px solid var(--accent2); }
+  .tag-red   { background: var(--tag-red);    color: var(--danger);  border: 1px solid var(--danger); }
+
+  /* ── ALERTS ── */
+  .alert {
+    border-left: 3px solid;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .alert-warn  { border-color: var(--accent2); background: var(--tag-orange); color: var(--accent2); }
+  .alert-info  { border-color: var(--accent);  background: var(--tag-blue);  color: var(--accent);  }
+  .alert-good  { border-color: var(--accent3); background: var(--tag-green); color: var(--accent3); }
+
+  /* ── TIMELINE ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: grid;
+    grid-template-columns: 100px 24px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .tl-date { font-size: 12px; color: var(--text2); text-align: right; padding-top: 2px; font-weight: 600; }
+  .tl-line { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 4px; }
+  .tl-stem { width: 2px; background: var(--border); flex: 1; min-height: 20px; margin: 4px 0; }
+  .tl-item:last-child .tl-stem { display: none; }
+  .tl-content { padding-bottom: 18px; }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .tl-desc  { font-size: 12px; color: var(--text2); margin-top: 4px; line-height: 1.6; }
+
+  /* ── COMPARE ── */
+  .compare-row {
+    display: grid;
+    gap: 12px;
+  }
+  .compare-col {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .compare-col.highlight { border-color: var(--accent3); }
+  .compare-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text2); margin-bottom: 8px; }
+  .compare-value { font-size: 22px; font-weight: 800; color: var(--accent); }
+  .compare-unit  { font-size: 13px; color: var(--text2); margin-top: 4px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1d2e 0%, #252840 60%, #1a1d2e 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero-emoji { font-size: 52px; }
+  .hero-title { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .hero-sub   { font-size: 14px; color: var(--text2); max-width: 480px; line-height: 1.7; }
+
+  /* ── STAT ROW ── */
+  .stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    flex: 1;
+    min-width: 110px;
+  }
+  .stat-num  { font-size: 24px; font-weight: 800; color: var(--accent); }
+  .stat-label{ font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+  /* ── STEP LIST ── */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 14px;
+    border: 1px solid var(--border);
+  }
+  .step-num {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 700; color: var(--text); }
+  .step-desc  { font-size: 12px; color: var(--text2); margin-top: 4px; line-height: 1.6; }
+
+  /* ── SEASON BAR ── */
+  .season-bar {
+    display: flex;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 36px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .season-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 6px;
+  }
+
+  /* ── DEST CARDS ── */
+  .dest-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .dest-emoji { font-size: 28px; flex-shrink: 0; }
+  .dest-body { flex: 1; }
+  .dest-name { font-size: 15px; font-weight: 700; color: var(--text); }
+  .dest-meta { font-size: 12px; color: var(--text2); margin-top: 4px; line-height: 1.6; }
+  .dest-tags { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* ── KEYBOARD HINT ── */
+  .kbd-hint {
+    font-size: 11px;
+    color: var(--text2);
+    text-align: center;
+  }
+  .kbd {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: monospace;
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-title">🏔️ <strong>IBK 歐洲旅遊總覽</strong> — 2027 交換學期</div>
+  <div class="slide-dots" id="dots"></div>
+  <div class="nav-counter" id="counter">1 / 8</div>
+</nav>
+
+<!-- SLIDER -->
+<div class="slider">
+  <div class="slides-track" id="track">
+
+    <!-- ═══════════════ SLIDE 1：封面 ═══════════════ -->
+    <div class="slide">
+      <div class="hero">
+        <div class="hero-emoji">🏔️</div>
+        <div class="hero-title">從茵斯布魯克出發<br>歐洲旅遊總覽</div>
+        <div class="hero-sub">
+          2027.02.15 ～ 2027.07.31<br>
+          Universität Innsbruck 交換學期
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+          <span class="tag tag-blue">🚄 交通策略</span>
+          <span class="tag tag-green">🗓️ 旅遊時段</span>
+          <span class="tag tag-orange">🏙️ 目的地</span>
+          <span class="tag tag-red">💰 省錢技巧</span>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">168</div><div class="stat-label">交換天數</div></div>
+        <div class="stat"><div class="stat-num">13</div><div class="stat-label">復活節假期（天）</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">5月可拼連假節點</div></div>
+        <div class="stat"><div class="stat-num">€27</div><div class="stat-label">威尼斯最低巴士票</div></div>
+        <div class="stat"><div class="stat-num">5h</div><div class="stat-label">IBK → 威尼斯最快</div></div>
+      </div>
+
+      <div class="alert alert-info">
+        📌 本簡報內容來自 Wiki 知識庫，所有票價與班次資料以出發前官網查詢為準。
+      </div>
+      <div class="kbd-hint">使用 <span class="kbd">←</span> <span class="kbd">→</span> 方向鍵或下方按鈕翻頁</div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 2：基地城市 ═══════════════ -->
+    <div class="slide">
+      <h2>🏠 基地城市：Innsbruck（茵斯布魯克）</h2>
+
+      <div class="card-grid col-2">
+        <div class="card">
+          <div class="card-icon">🏔️</div>
+          <div class="card-title">城市特色</div>
+          <div class="card-sub">
+            奧地利 Tyrol（蒂洛爾）州首府，阿爾卑斯山環抱，人口約 13 萬。<br>
+            城市小而精緻，步行可達大多數景點。冬季滑雪旺季；夏季健行。
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚉</div>
+          <div class="card-title">交通樞紐</div>
+          <div class="card-sub">
+            <strong>Innsbruck Hbf</strong>（主火車站）：所有長途火車出發點<br>
+            市內：路面電車 + 公車，學生有學期票<br>
+            <span class="tag tag-warn">Flixbus 出發地：Südbahnstraße（南站），非 Hbf！</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>本地景點</h3>
+      <div class="card-grid col-3">
+        <div class="card">
+          <div class="card-icon">⛰️</div>
+          <div class="card-title">Nordkette 纜車</div>
+          <div class="card-sub">
+            市區 → Seegrube（2,256m）→ 頂站<br>
+            俯瞰城市與山谷全景<br>
+            <span class="tag tag-orange">費用 ⚠️ 待確認</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🦌</div>
+          <div class="card-title">Alpenzoo 動物園</div>
+          <div class="card-sub">
+            全歐洲海拔最高動物園<br>
+            阿爾卑斯物種：野山羊、山貓、狼<br>
+            <span class="tag tag-green">Innsbruck card 折扣</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <div class="card-title">老城區 Altstadt</div>
+          <div class="card-sub">
+            Goldenes Dachl（黃金屋頂）<br>
+            Maria-Theresien-Straße 購物街<br>
+            <span class="tag tag-blue">步行免費</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎫 Innsbruck Card（茵斯布魯克卡）</div>
+        <div class="card-sub">城市旅遊通票，可用於動物園 + Nordkette 纜車等多處景點，同天多景點時可能更划算。費用 ⚠️ 待確認，請至官網確認。</div>
+      </div>
+
+      <div class="alert alert-warn">
+        ⚠️ 冬天旺季（滑雪季）Innsbruck 一般住宿費非常高。交換學生有學生宿舍，不受影響。
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 3：旅遊時段 ═══════════════ -->
+    <div class="slide">
+      <h2>🗓️ 交換期間旅遊時段分析</h2>
+
+      <div style="background:var(--surface);border-radius:10px;padding:14px;border:1px solid var(--border)">
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">時間軸概覽（2027.02 → 07）</div>
+        <div class="season-bar">
+          <div class="season-seg" style="background:#2a3a5a;width:8%">2月抵達</div>
+          <div class="season-seg" style="background:#2d3a2a;width:12%">3月初課</div>
+          <div class="season-seg" style="background:#5a3a1a;width:11%">復活節🔴</div>
+          <div class="season-seg" style="background:#2d3a2a;width:16%">4月課</div>
+          <div class="season-seg" style="background:#3a3a1a;width:14%">5月拼假🟡</div>
+          <div class="season-seg" style="background:#1a4a2a;width:18%">6月最佳季</div>
+          <div class="season-seg" style="background:#1a4a3a;width:21%">7月暑假🌟</div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2/15–2/28</div>
+          <div class="tl-line"><div class="tl-dot" style="background:#6680aa"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">❄️ 抵達適應期 <span class="tag tag-blue">無課</span></div>
+            <div class="tl-desc">冬末、積雪、日照短。建議周邊短途（慕尼黑、薩爾茨堡）或滑雪體驗。長途旅行建議等春季。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">3/1–3/21</div>
+          <div class="tl-line"><div class="tl-dot" style="background:#4a6a4a"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">🌱 開學初 <span class="tag tag-green">僅週末</span></div>
+            <div class="tl-desc">週末快閃：慕尼黑（2h）、薩爾茨堡（2h）、維也納（4.5h）等鐵路可達城市。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">3/22–4/3</div>
+          <div class="tl-line"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">🌸 復活節長假 ⭐⭐⭐⭐⭐ <span class="tag tag-orange">13天無課</span></div>
+            <div class="tl-desc"><strong>最佳長途時段</strong>：義大利（威尼斯／佛羅倫斯／羅馬）、克羅埃西亞、捷克布拉格、希臘。注意：歐洲大節日，住宿需提早訂。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">4/7–4/30</div>
+          <div class="tl-line"><div class="tl-dot" style="background:#4a6a4a"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">🌸 春季上課 <span class="tag tag-green">僅週末</span></div>
+            <div class="tl-desc">春季氣候最佳。週末可快閃義大利北部（維羅納、威尼斯）或德國南部。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">5月</div>
+          <div class="tl-line"><div class="tl-dot" style="background:#aaaa4a"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">🌿 多個連假節點 ⭐⭐⭐⭐</div>
+            <div class="tl-desc">
+              05/06（週四）耶穌升天節 → 請 05/07（週五）可拼 4 天連假<br>
+              05/17（週一）聖靈降臨節 → 長週末（六日一）<br>
+              05/27（週四）基督聖體節 → 請 05/28（週五）可拼 4 天連假
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">6/1–6/27</div>
+          <div class="tl-line"><div class="tl-dot" style="background:var(--accent3)"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">☀️ 學期末 — 歐洲最佳旅遊季 ⭐⭐⭐⭐</div>
+            <div class="tl-desc">日照長（晚上9點天亮）、氣候宜人、尚未到暑假人潮高峰。週末把握旅遊，性價比最高。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">6/28–7/31</div>
+          <div class="tl-line"><div class="tl-dot" style="background:var(--accent2)"></div><div class="tl-stem"></div></div>
+          <div class="tl-content">
+            <div class="tl-title">🌟 暑假自由期 ⭐⭐⭐⭐⭐ <span class="tag tag-orange">無課</span></div>
+            <div class="tl-desc">最後長途機會。北歐（挪威）、東歐（波蘭）避暑；南歐（西班牙、希臘）可能 35°C+。7月旺季，住宿和交通提早訂。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 4：ÖBB 鐵路 ═══════════════ -->
+    <div class="slide">
+      <h2>🚄 ÖBB（奧地利聯邦鐵路）— 核心交通工具</h2>
+
+      <div class="card-grid col-2">
+        <div class="card">
+          <div class="card-icon">🚅</div>
+          <div class="card-title">主要車種</div>
+          <div class="card-sub">
+            <strong>Railjet（RJ/RJX）</strong>：旗艦高速，連接德義奧匈<br>
+            <strong>Nightjet（NJ）</strong>：夜間臥鋪，可睡眠中抵達威尼斯、羅馬<br>
+            <strong>EC / IC</strong>：歐洲城際列車<br>
+            <strong>Regionalzug</strong>：區間車，不需預訂、不會售完
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📍</div>
+          <div class="card-title">出發站</div>
+          <div class="card-sub">
+            <strong>Innsbruck Hbf</strong>（主火車站）<br>
+            所有 ÖBB 長途班次皆由此出發<br><br>
+            訂票：ÖBB 官網 / ÖBB App
+          </div>
+        </div>
+      </div>
+
+      <h3>從 Innsbruck 出發主要路線</h3>
+      <table>
+        <thead>
+          <tr><th>目的地</th><th>車程</th><th>Sparschiene 最低</th><th>當天票（約）</th><th>備註</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>威尼斯 Venice</strong></td>
+            <td>4h 57min</td>
+            <td><strong style="color:var(--accent3)">€38.40</strong>（分段）<br>€40.70（直達）</td>
+            <td style="color:var(--danger)">€68.50</td>
+            <td>RJ81 直達；需預訂座位 €3</td>
+          </tr>
+          <tr>
+            <td><strong>佛羅倫斯 Firenze</strong></td>
+            <td>6h 11min</td>
+            <td><strong style="color:var(--accent3)">€31.80</strong></td>
+            <td>⚠️ 待確認</td>
+            <td>在 Verona/Bologna 轉車</td>
+          </tr>
+          <tr>
+            <td><strong>慕尼黑 München</strong></td>
+            <td>~2h</td>
+            <td>⚠️ 待確認</td>
+            <td>⚠️ 待確認</td>
+            <td>Railjet，多班直達</td>
+          </tr>
+          <tr>
+            <td><strong>維也納 Wien</strong></td>
+            <td>~4.5h</td>
+            <td>⚠️ 待確認</td>
+            <td>⚠️ 待確認</td>
+            <td>Railjet 直達</td>
+          </tr>
+          <tr>
+            <td><strong>羅馬 Roma</strong></td>
+            <td>夜車</td>
+            <td>Nightjet 從 €24.90</td>
+            <td>—</td>
+            <td>可提前 360 天購票</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-warn">
+        ⚠️ <strong>注意分段票限制</strong>：部分班次票券只在特定路段有效（如 Brennero → Verona），搜尋時若出現紅色警告需特別留意，建議選擇全程有效的班次。
+      </div>
+
+      <div class="alert alert-info">
+        💡 <strong>Brennero/Brenner Pass</strong>（布倫納山口）：Innsbruck → 義大利的必經鐵路關口，穿越奧義邊境。
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 5：Sparschiene 省錢票 ═══════════════ -->
+    <div class="slide">
+      <h2>💰 Sparschiene 省錢票 — 最重要的訂票工具</h2>
+
+      <div class="alert alert-good">
+        ✅ 核心原則：<strong>越早訂越便宜，出發前 6 個月（180 天）開放購票</strong>
+      </div>
+
+      <div class="card-grid col-2">
+        <div>
+          <h3>奧地利境內票種</h3>
+          <table>
+            <thead><tr><th>票種</th><th>二等艙起價</th><th>特性</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Sparschiene Austria</strong></td><td style="color:var(--accent3)">€9.90</td><td>不可退，不可改日期</td></tr>
+              <tr><td>Sparschiene <strong>Komfort</strong> Austria</td><td style="color:var(--accent3)">€4.90</td><td>含對號座，可退款（有條件）</td></tr>
+              <tr><td><strong>Nightjet</strong> Austria</td><td style="color:var(--accent3)">€24.90</td><td>夜車座位車廂</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:12px">
+          <h3>歐洲跨境票種</h3>
+          <table>
+            <thead><tr><th>票種</th><th>二等艙起價</th><th>特性</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Sparschiene Europe</strong></td><td style="color:var(--accent3)">€4.90</td><td>不可退</td></tr>
+              <tr><td>Sparschiene <strong>Komfort</strong> Europe</td><td style="color:var(--accent3)">€9.90</td><td>含對號座，可退款</td></tr>
+              <tr><td>Nightjet / EuroNight</td><td style="color:var(--accent3)">€24.90</td><td>可提前 <strong>360 天</strong> 購票</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="border-color:var(--accent3)">
+            <div class="card-title" style="color:var(--accent3)">✅ 可以</div>
+            <div class="card-sub">
+              • 最早提前 180 天購票（Nightjet 360 天）<br>
+              • ÖBB 官網或 App 購買<br>
+              • Komfort 版可退款（15天前全額，1~15天收50%手續費）
+            </div>
+          </div>
+          <div class="card" style="border-color:var(--danger)">
+            <div class="card-title" style="color:var(--danger)">❌ 注意</div>
+            <div class="card-sub">
+              • 基本版<strong>不可退款、不可更改</strong><br>
+              • 票綁定班次，不可轉到其他班次或日期<br>
+              • 無額外折扣（即使有學生證）<br>
+              • 數量有限，越晚訂越貴或售完
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">💡 省錢技巧</div>
+            <div class="card-sub">
+              1. 出發前 6 個月立刻訂，特別是復活節、暑假<br>
+              2. 搜尋時勾選「<strong>Best price</strong>」找最低價<br>
+              3. 行程可能變動 → 多花幾€買 Komfort 版有保障<br>
+              4. <strong>Nachtschwärmer</strong>（夜貓子票）：晚上7點~凌晨3點加開更多名額
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>提早 vs 當天買票：威尼斯為例</h3>
+      <div class="compare-row" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="compare-col highlight">
+          <div class="compare-label">🎯 Sparschiene 早鳥</div>
+          <div class="compare-value" style="color:var(--accent3)">€35–40</div>
+          <div class="compare-unit">提前購買（社群回報）</div>
+        </div>
+        <div class="compare-col">
+          <div class="compare-label">📋 ÖBB 官網查詢最低</div>
+          <div class="compare-value">€38.40</div>
+          <div class="compare-unit">分段票 / €40.70 直達</div>
+        </div>
+        <div class="compare-col" style="border-color:var(--danger)">
+          <div class="compare-label">⚡ 當天直達票</div>
+          <div class="compare-value" style="color:var(--danger)">€68.50</div>
+          <div class="compare-unit">社群回報（約3年前）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 6：交通比較 ═══════════════ -->
+    <div class="slide">
+      <h2>🚌 交通方式全比較：IBK → 威尼斯</h2>
+
+      <table>
+        <thead>
+          <tr><th>方式</th><th>最低票價</th><th>最快車程</th><th>出發地點</th><th>抵達站點</th><th>舒適度</th><th>適合情境</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ÖBB 火車</strong><br><small>Sparschiene 早鳥</small></td>
+            <td style="color:var(--accent3)"><strong>€38.40</strong><br><small>分段票</small></td>
+            <td><strong>4h 57min</strong></td>
+            <td>Innsbruck <strong>Hbf</strong></td>
+            <td>Venice <strong>Santa Lucia</strong>（本島直達）</td>
+            <td>⭐⭐⭐⭐</td>
+            <td>趕時間、重視舒適</td>
+          </tr>
+          <tr>
+            <td><strong>Flixbus</strong><br><small>廉價巴士</small></td>
+            <td style="color:var(--accent3)"><strong>€27.48</strong><br><small>隔天班次最低</small></td>
+            <td>5h 00min<br><small>13:10 班</small></td>
+            <td>Innsbruck <strong>Südbahnstraße</strong>⚠️</td>
+            <td>Venice Mestre 或 Tronchetto<br><small>（需再轉乘進島）</small></td>
+            <td>⭐⭐</td>
+            <td>預算有限、不趕時間</td>
+          </tr>
+          <tr>
+            <td><strong>Flixbus 過夜班</strong></td>
+            <td style="color:var(--accent3)"><strong>€27.48</strong></td>
+            <td>01:30 出發<br>06:55 抵達</td>
+            <td>Innsbruck Südbahnstraße</td>
+            <td>Venice Mestre</td>
+            <td>⭐</td>
+            <td>省一晚住宿費</td>
+          </tr>
+          <tr>
+            <td><strong>廉價航空</strong><br><small>INN 機場（easyJet等）</small></td>
+            <td style="color:var(--danger)">約 NT\$8,130+</td>
+            <td>~1h（飛行）</td>
+            <td>Innsbruck Airport</td>
+            <td>Venice Marco Polo Airport<br><small>（需接駁進市區）</small></td>
+            <td>⭐⭐⭐</td>
+            <td>通常不划算，除非有特價</td>
+          </tr>
+          <tr>
+            <td><strong>區間車串聯</strong><br><small>備用方案</small></td>
+            <td>⚠️ 待確認</td>
+            <td>時間較長</td>
+            <td>Innsbruck Hbf</td>
+            <td>Venice Santa Lucia</td>
+            <td>⭐⭐</td>
+            <td>ÖBB 售完時的備案</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-warn">
+        ⚠️ <strong>Flixbus 重要提醒</strong>：茵斯布魯克出發地點是 <strong>Südbahnstraße</strong>（南火車站附近），<strong>不是 Hbf</strong>！請提前確認正確上車地點。
+      </div>
+
+      <h3>威尼斯三個抵達站點說明</h3>
+      <div class="card-grid col-3">
+        <div class="card" style="border-color:var(--accent3)">
+          <div class="card-title" style="color:var(--accent3)">🌟 Santa Lucia（聖露西亞）</div>
+          <div class="card-sub">位於本島西端。ÖBB 直達終點，<strong>下車即進入威尼斯</strong>。最方便。</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Mestre（梅斯特雷）</div>
+          <div class="card-sub">本島對岸，陸地城鎮。多數 Flixbus 抵達。需再搭火車或公車進島（約15–20分鐘）。</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Tronchetto（特倫凱托）</div>
+          <div class="card-sub">本島西端停車場/換乘站。部分 Flixbus 抵達。離聖露西亞約 10 分鐘步行。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 7：目的地 ═══════════════ -->
+    <div class="slide">
+      <h2>🏙️ 目的地概覽</h2>
+
+      <div class="dest-card">
+        <div class="dest-emoji">🇮🇹</div>
+        <div class="dest-body">
+          <div class="dest-name">Venice（威尼斯）</div>
+          <div class="dest-meta">
+            火車 ~5h｜Sparschiene €38.40 起｜Flixbus €27.48 起<br>
+            水上城市，118 座小島，步行迷路是體驗。<br>
+            景點：大運河、聖馬可廣場、里阿爾托橋、貢多拉<br>
+            住宿貴 → 考慮住 Mestre 對岸或當天往返
+          </div>
+          <div class="dest-tags">
+            <span class="tag tag-green">春季最佳</span>
+            <span class="tag tag-blue">ÖBB 直達 Santa Lucia</span>
+            <span class="tag tag-orange">旺季住宿需提早訂</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-card">
+        <div class="dest-emoji">🇮🇹</div>
+        <div class="dest-body">
+          <div class="dest-name">Firenze（佛羅倫斯）</div>
+          <div class="dest-meta">
+            火車 ~6h 11min｜Sparschiene €31.80 起（最便宜義大利目的地！）<br>
+            文藝復興藝術之都。<br>
+            通常在 Verona 或 Bologna 轉車
+          </div>
+          <div class="dest-tags">
+            <span class="tag tag-green">€31.80 最低票</span>
+            <span class="tag tag-blue">需轉車</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dest-card">
+        <div class="dest-emoji">🇮🇹</div>
+        <div class="dest-body">
+          <div class="dest-name">Milan（米蘭）</div>
+          <div class="dest-meta">
+            通常經威尼斯或佛羅倫斯轉車前往<br>
+            景點：Duomo（⚠️ 必須提前網上預票！）、Galleria Vittorio Emanuele II、中央市場<br>
+            夜晚：Naviglio Grande 運河酒吧區
+          </div>
+          <div class="dest-tags">
+            <span class="tag tag-red">Duomo 需預票</span>
+            <span class="tag tag-orange">建議 2–3 天</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-grid col-3">
+        <div class="dest-card" style="display:flex;flex-direction:column">
+          <div class="dest-emoji">🇩🇪</div>
+          <div class="dest-name" style="font-weight:700">München（慕尼黑）</div>
+          <div class="dest-meta" style="font-size:12px;color:var(--text2);margin-top:4px">ÖBB ~2h 直達｜週末快閃首選<br>MUC 機場：廉航選擇最多</div>
+        </div>
+        <div class="dest-card" style="display:flex;flex-direction:column">
+          <div class="dest-emoji">🇦🇹</div>
+          <div class="dest-name" style="font-weight:700">Wien（維也納）</div>
+          <div class="dest-meta" style="font-size:12px;color:var(--text2);margin-top:4px">ÖBB ~4.5h｜奧地利首都<br>週末快閃可行</div>
+        </div>
+        <div class="dest-card" style="display:flex;flex-direction:column">
+          <div class="dest-emoji">🇬🇧</div>
+          <div class="dest-name" style="font-weight:700">London（倫敦）</div>
+          <div class="dest-meta" style="font-size:12px;color:var(--text2);margin-top:4px">easyJet INN → Gatwick<br>€52–106（12月查詢值）⚠️ 需再查2027票價</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SLIDE 8：決策流程 ═══════════════ -->
+    <div class="slide">
+      <h2>🎯 旅行決策流程 & 重點整理</h2>
+
+      <div class="card-grid col-2">
+        <div>
+          <h3>訂票決策流程</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-title">確認旅遊時段</div>
+                <div class="step-desc">復活節（3/22–4/3）和暑假（6/28–7/31）是最好的長途時段。5月三個連假可拼 4 天。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-title">出發前 6 個月立刻訂 ÖBB Sparschiene</div>
+                <div class="step-desc">復活節行程開始日確認後馬上訂票。熱門班次（尤其週末）會售完。Nightjet 可提前 360 天。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-title">評估 ÖBB vs Flixbus</div>
+                <div class="step-desc">若能搶到 Sparschiene 早鳥 → 選 ÖBB（快速舒適）。若預算極緊 → 考慮 Flixbus（€27.48，注意 Südbahnstraße 出發）。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <div class="step-title">預訂座位（+€3）</div>
+                <div class="step-desc">ÖBB 熱門路線（尤其到威尼斯）務必同時預訂座位，否則可能需要站立。</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <div class="step-title">提前確認時間敏感資訊</div>
+                <div class="step-desc">出發前重新查詢票價、班次、景點開放時間、Duomo 預票等。所有 Wiki 資料僅供參考。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <h3>⚠️ 重要提醒清單</h3>
+          <div class="card" style="border-color:var(--danger)">
+            <div class="card-title" style="color:var(--danger)">必確認事項</div>
+            <div class="card-sub">
+              □ Flixbus 出發地：<strong>Südbahnstraße</strong>（非 Hbf）<br>
+              □ Milan Duomo：<strong>出發前網上預票</strong>，現場不賣票<br>
+              □ ÖBB 分段票限制：注意紅色警告班次<br>
+              □ 復活節住宿：歐洲大節日，提早 1–2 個月訂
+            </div>
+          </div>
+          <div class="card" style="border-color:var(--accent2)">
+            <div class="card-title" style="color:var(--accent2)">申根規定</div>
+            <div class="card-sub">
+              交換 &gt;90 天 → <strong>需申請奧地利學生居留許可</strong><br>
+              有居留許可後不受 90/180 天限制<br>
+              ETIAS：⚠️ 2025 年尚未啟動，出發前確認狀態
+            </div>
+          </div>
+          <div class="card" style="border-color:var(--accent3)">
+            <div class="card-title" style="color:var(--accent3)">省錢速查</div>
+            <div class="card-sub">
+              🚄 ÖBB Sparschiene：威尼斯最低 <strong>€38.40</strong><br>
+              🚌 Flixbus：威尼斯最低 <strong>€27.48</strong><br>
+              ✈️ easyJet INN→倫敦：約 <strong>€52–106</strong><br>
+              🎫 Innsbruck card：纜車 + 動物園組合划算
+            </div>
+          </div>
+          <div class="alert alert-info">
+            📚 本簡報來源：Wiki 知識庫（2026-11-18）<br>
+            所有票價與時刻表以出發前官網查詢為準
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /slides-track -->
+</div><!-- /slider -->
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="btn" id="prevBtn" onclick="go(-1)" disabled>← 上一頁</button>
+  <div class="slide-label" id="slideLabel">封面</div>
+  <button class="btn" id="nextBtn" onclick="go(1)">下一頁 →</button>
+</div>
+
+<script>
+  const labels = [
+    '封面', '基地：Innsbruck', '旅遊時段', 'ÖBB 鐵路', 'Sparschiene 省錢票', '交通比較', '目的地概覽', '決策流程'
+  ];
+  const total = labels.length;
+  let cur = 0;
+
+  const track   = document.getElementById('track');
+  const counter = document.getElementById('counter');
+  const label   = document.getElementById('slideLabel');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsEl  = document.getElementById('dots');
+
+  // Build dots
+  labels.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.title = labels[i];
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function render() {
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    counter.textContent = `${cur + 1} / ${total}`;
+    label.textContent   = labels[cur];
+    prevBtn.disabled    = cur === 0;
+    nextBtn.disabled    = cur === total - 1;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === cur);
+    });
+    // scroll slide to top
+    document.querySelectorAll('.slide')[cur].scrollTop = 0;
+  }
+
+  function go(dir) { goTo(cur + dir); }
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    cur = n;
+    render();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  go(-1);
+  });
+
+  render();
+</script>
+</body>
+</html>
