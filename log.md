@@ -1,5 +1,18 @@
 # 📝 操作日誌
 
+## [2026-11-18] GITHUB DEPLOY | 專案正式推播至 GitHub 遠端儲存庫
+
+Repository: https://github.com/winnie930910-lgtm/innsbruck-exchange-travel-wiki.git
+Branch: main
+Commit: feat: initial commit for European Exchange Travel LLM Wiki & Magazine Presentation
+Content:
+- 完整 Wiki 知識庫（base, transport, destinations, practical）
+- 11 頁雜誌風格 HTML 教學簡報（html/innsbruck-magazine-guide.html）
+- Assets 圖片庫、raw 原始文檔庫、index.md、README.md、AGENTS.md
+Result: 推送成功，已連結至遠端 origin/main。
+
+---
+
 ## [2026-11-18] GRAPH REDESIGN & HTML RENDER | 知識圖譜導向之雜誌風簡報定案發布
 
 Topic: 2027 茵斯布魯克交換生歐洲旅行手冊（Graph 決策拓撲架構 × 歐洲旅遊雜誌風格，11頁投影片式）
